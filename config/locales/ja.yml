@@ -1,0 +1,24 @@
+ja:
+  enums:
+    individual:
+      sex:
+        neutered: '去勢'
+        male: 'オス'
+        fmale: 'メス'
+      category:
+        feedlot: '肥育'
+        breeding: '繁殖'
+        calf: '育成'
+        suckling: '子牛'
+      breed_type:
+        black: '黒毛和種'
+        F1: 'F1'
+  date:
+    formats:
+      default: "%Y年%m月%d日"
+  datetime:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"

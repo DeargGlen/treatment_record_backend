@@ -4,9 +4,8 @@ module Api
       def index
         treatments = Treatment.all
 
-        render json: {
-          treatments: treatments
-        }, status: :ok
+        render 'index', formats: 'json', handlers: 'jbuilder'
+        end
       end
 
       def create
