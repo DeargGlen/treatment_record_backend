@@ -19,5 +19,4 @@ class Individual < ApplicationRecord
     validates :breed_type, presence: true
 
 
-
 end

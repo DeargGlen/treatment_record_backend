@@ -22,7 +22,16 @@ module Api
       end
 
       def create
-        @individual = Individual.new(individual_params)
+        @individual = Individual.new(
+          id: params[:id],
+          date_of_birth: params[:date_of_birth],
+          sex: params[:sex],
+          category: params[:category],
+          breed_type: params[:breed_type],
+          mother_id: params[:mother_id],
+          date_of_introduction: params[:date_of_introduction],
+          block_id: params[:block_id],
+        )
 
         if @individual.save
           render json: {
@@ -37,7 +46,7 @@ module Api
       private
 
         def individual_params
-          params.require(:individual).permit(:id, :date_of_birth, :sex, :category, :breed_type, :date_of_introduction, :block_id)
+          params.require(:individual).permit(:id, :date_of_birth, :sex, :category, :breed_type, :mother_id, :father_name, :grandfather_namme, :date_of_introduction, :block_id)
         end
     end
   end

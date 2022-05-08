@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  before_action :set_current_user
   before_action :fake_load
 
   def fake_load

@@ -10,7 +10,7 @@ class CreateIndividuals < ActiveRecord::Migration[6.1]
       t.string :father_name
       t.string :grandfather_name
       t.date :date_of_introduction
-      t.references :block, foreign_key: true, null:false
+      t.references :block, foreign_key: true, null:false, default: 1
       t.timestamps
     end
   end

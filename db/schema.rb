@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2022_04_17_074715) do
     t.string "father_name"
     t.string "grandfather_name"
     t.date "date_of_introduction"
-    t.bigint "block_id", null: false
+    t.bigint "block_id", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["block_id"], name: "index_individuals_on_block_id"
