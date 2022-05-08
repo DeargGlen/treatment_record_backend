@@ -1,22 +1,24 @@
 module Api
   module V1
     class IndividualsController < ApplicationController
+      include ActionController::MimeResponds
       def index
-        individuals = Individual.all
+        @individuals = Individual.all
+        @d2=Date.today
 
-        render json: {
-          individuals: individuals
-        }, status: :ok
+        respond_to do |format|
+          format.json
+        end
       end
 
       def show
-        individual = Individual.find_by(id: params[:id])
-        treatments = individual.treatments
+        @individual = Individual.find_by(id: params[:id])
+        @treatments = @individual.treatments.left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
+        @d2=Date.today
 
-        render json: {
-          individual: individual,
-          treatments: treatments
-        }, status: :ok
+        respond_to do |format|
+          format.json
+        end
       end
 
       def create

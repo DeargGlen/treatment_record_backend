@@ -1,10 +1,12 @@
 module Api
   module V1
     class TreatmentsController < ApplicationController
+      include ActionController::MimeResponds
       def index
-        treatments = Treatment.all
+        @treatments = Treatment.left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
 
-        render 'index', formats: 'json', handlers: 'jbuilder'
+        respond_to do |format|
+          format.json
         end
       end
 

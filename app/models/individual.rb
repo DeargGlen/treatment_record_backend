@@ -18,8 +18,6 @@ class Individual < ApplicationRecord
     validates :category, presence: true
     validates :breed_type, presence: true
 
-    enum sex: {neutered: 0, male: 1, felmale: 2 }
-    enum category: {feedlot: 0, breeding: 1, suckling: 2 , calf: 3}
-    enum breed_type: {black: 0, F1: 1}
+
 
 end
