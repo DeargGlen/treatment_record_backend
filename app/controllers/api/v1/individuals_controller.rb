@@ -1,6 +1,7 @@
 module Api
   module V1
     class IndividualsController < ApplicationController
+      before_action :authenticate_api_v1_user!
       include ActionController::MimeResponds
       def index
         @individuals = Individual.all
@@ -22,16 +23,7 @@ module Api
       end
 
       def create
-        @individual = Individual.new(
-          id: params[:id],
-          date_of_birth: params[:date_of_birth],
-          sex: params[:sex],
-          category: params[:category],
-          breed_type: params[:breed_type],
-          mother_id: params[:mother_id],
-          date_of_introduction: params[:date_of_introduction],
-          block_id: params[:block_id],
-        )
+        @individual = Individual.new(individual_params)
 
         if @individual.save
           render json: {

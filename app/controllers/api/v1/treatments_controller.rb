@@ -1,6 +1,8 @@
 module Api
   module V1
     class TreatmentsController < ApplicationController
+      before_action :authenticate_api_v1_user!
+
       include ActionController::MimeResponds
       def index
         @treatments = Treatment.left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
