@@ -38,7 +38,7 @@ module Api
       private
 
         def individual_params
-          params.require(:individual).permit(:id, :date_of_birth, :sex, :category, :breed_type, :mother_id, :father_name, :grandfather_namme, :date_of_introduction, :block_id)
+          params.require(:individual).permit(:id, :date_of_birth, :sex, :category, :breed_type, :mother_id, :father_name, :grandfather_name, :date_of_introduction, :block_id)
         end
     end
   end
