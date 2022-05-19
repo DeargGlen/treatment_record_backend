@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 2022_04_10_080713) do
     t.float "body_temperature"
     t.text "symptom"
     t.text "content"
-    t.boolean "gotDosage"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

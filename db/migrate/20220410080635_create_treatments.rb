@@ -6,7 +6,6 @@ class CreateTreatments < ActiveRecord::Migration[6.1]
       t.float :body_temperature
       t.text :symptom
       t.text :content
-      t.boolean :gotDosage
       t.references :user, foreign_key: true, null:false
       
       t.timestamps

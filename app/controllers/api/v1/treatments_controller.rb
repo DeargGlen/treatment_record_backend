@@ -13,7 +13,7 @@ module Api
       end
 
       def create
-        @treatment = current_user.treatments.build(treatment_params)
+        @treatment = current_api_v1_user.treatments.build(treatment_params)
 
         if @treatment.save
           render json: {
@@ -27,7 +27,7 @@ module Api
       private
 
         def treatment_params
-          params.require(:treatment).permit(:individual_id, :datetime, :body_temperature, :symptom, :content, :gotDosage)
+          params.require(:treatment).permit(:individual_id, :datetime, :body_temperature, :symptom, :content, :user_id)
         end
     end
   end

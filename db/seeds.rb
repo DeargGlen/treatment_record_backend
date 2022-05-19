@@ -30,16 +30,15 @@ Individual.create(id:"1000010020", date_of_birth:"2022-02-20", sex:1, category:1
     Individual.create!(id: id, date_of_birth: date_of_birth, sex: sex, category: category, breed_type: breed_type, date_of_introduction: date_of_introduction, block_id: block_id)
 end
 
-Treatment.create(individual_id:"1000010010", datetime:"2022-02-20 8:00:00 +0900", body_temperature:38.8, symptom:"症状のメモ", content:"治療内容", gotDosage:false, user_id:1)
+Treatment.create(individual_id:"1000010010", datetime:"2022-02-20 8:00:00 +0900", body_temperature:38.8, symptom:"症状のメモ", content:"治療内容", user_id:1)
 individuals = Individual.order(:id).take(6)
 25.times do
     datetime = Time.zone.now
     body_temperature = 38.0
     symptom="メモ"
     content="内容"
-    gotDosage=false
     user_id=Faker::Number.number(digits:2) % 15 + 1
-    individuals.each { |individual| individual.treatments.create!(datetime: datetime, body_temperature: body_temperature, symptom: symptom, content: content, gotDosage: gotDosage, user_id: user_id)}
+    individuals.each { |individual| individual.treatments.create!(datetime: datetime, body_temperature: body_temperature, symptom: symptom, content: content, user_id: user_id)}
 end
 
 SymptomTag.create(name:"症状1")

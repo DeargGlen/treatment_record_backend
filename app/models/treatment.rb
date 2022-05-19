@@ -6,5 +6,4 @@ class Treatment < ApplicationRecord
     has_many :dosages
     belongs_to :user
 
-    validates :gotDosage, inclusion: { in: [true, false]}
 end
