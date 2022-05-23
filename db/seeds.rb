@@ -15,7 +15,9 @@ User.create(name:"DeargGlen", email:"deargglen@example.com", password:"password"
 end
 
 Area.create(name:"本場")
+Area.create(name:"城内")
 Barn.create(name:"家の前", area_id:1)
+Barn.create(name:"城内のもの", area_id:2)
 Block.create(No:"北1", barn_id:1)
 Individual.create(id:"1000010010", date_of_birth:"2022-02-20", sex:0, category:0, breed_type:0, date_of_introduction:"2022-02-20", block_id:1)
 Individual.create(id:"1000010020", date_of_birth:"2022-02-20", sex:1, category:1, breed_type:1, date_of_introduction:"2022-02-20", block_id:1)
