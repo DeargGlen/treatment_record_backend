@@ -50,6 +50,7 @@ test:
 #
 production:
   <<: *default
-  database: treatment_record_backend_production
-  username: treatment_record_backend
-  password: <%= ENV['TREATMENT_RECORD_BACKEND_DATABASE_PASSWORD'] %>
+  database: treatment_record_app_backend_production
+  username: root
+  password: <%= Rails.application.credentials.db[:password] %>
+  host: <%= Rails.application.credentials.db[:hostname] %>
