@@ -2,7 +2,7 @@ module Api
   module V1
     class AreasController < ApplicationController
       include ActionController::MimeResponds
-
+      before_action :authenticate_api_v1_user!
       def index
         @areas = Area.all
 

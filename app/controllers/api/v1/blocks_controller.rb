@@ -2,7 +2,7 @@ module Api
   module V1
     class BlocksController < ApplicationController
       include ActionController::MimeResponds
-
+      before_action :authenticate_api_v1_user!
       def destroy
         @block = Block.find(params[:id])
         if @block.destroy

@@ -2,7 +2,7 @@ module Api
   module V1
     class BarnsController < ApplicationController
       include ActionController::MimeResponds
-
+      before_action :authenticate_api_v1_user!
       def show
         @barn = Barn.find_by(id: params[:id])
         @blocks = @barn.blocks
