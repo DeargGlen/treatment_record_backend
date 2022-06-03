@@ -12,6 +12,15 @@ module Api
         end
       end
 
+      def show
+        @treatment = Treatment.find_by(id: params[:id]).left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
+        @comments = @treatment.treat_comments.left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
+
+        respond_to do |format|
+          format.json
+        end
+      end
+
       def create
         @treatment = current_api_v1_user.treatments.build(treatment_params)
 
