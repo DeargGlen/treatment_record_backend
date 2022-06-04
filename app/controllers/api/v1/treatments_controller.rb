@@ -13,8 +13,8 @@ module Api
       end
 
       def show
-        @treatment = Treatment.find_by(id: params[:id]).left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
-        @comments = @treatment.treat_comments.left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
+        @treatment = Treatment.left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name').find_by(id: params[:id])
+        @treat_comments = @treatment.treat_comments.left_outer_joins(:user).select('treat_comments.*,user_id as user_id, name as user_name')
 
         respond_to do |format|
           format.json
