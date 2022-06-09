@@ -2,4 +2,6 @@ json.extract! @barn,
               :id,
               :name
 
-json.blocks @blocks, :id, :No
+json.blocks do
+  json.array! @blocks, partial: 'blocks/block', as: :block
+end
