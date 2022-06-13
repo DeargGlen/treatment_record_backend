@@ -2,6 +2,7 @@ class Individual < ApplicationRecord
     has_many :treatments
     belongs_to :block
     has_one :barn, through: :block
+    has_many :individual_tag_entries
 
     default_scope -> { order(created_at: :desc)}
 

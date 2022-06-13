@@ -16,6 +16,7 @@ module Api
         @individual = Individual.find_by(id: params[:id])
         @treatments = @individual.treatments.left_outer_joins(:user).select('treatments.*,user_id as user_id, name as user_name')
         @d2=Date.today
+        @individual_tag_entries = @individual.individual_tag_entries.left_outer_joins(:individual_tag).select('individual_tag_entries. *, individual_tags.*')
 
         respond_to do |format|
           format.json
@@ -24,6 +25,12 @@ module Api
 
       def create
         @individual = Individual.new(individual_params)
+        @individual_tags = params[:individual_tags]
+
+        @individual_tags.each do |tag_id|
+          @individual_tag_entry = @individual.individual_tag_entries.build({individual_tag_id: tag_id})
+          @individual_tag_entry.save
+        end
 
         if @individual.save
           render json: {
@@ -38,7 +45,7 @@ module Api
       private
 
         def individual_params
-          params.require(:individual).permit(:id, :date_of_birth, :sex, :category, :breed_type, :mother_id, :father_name, :grandfather_name, :date_of_introduction, :block_id)
+          params.require(:individual).permit(:id, :date_of_birth, :sex, :category, :breed_type, :mother_id, :father_name, :grandfather_name, :grand_grandfather_name, :date_of_introduction, :block_id)
         end
     end
   end

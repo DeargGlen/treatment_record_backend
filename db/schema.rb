@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_10_080713) do
+ActiveRecord::Schema.define(version: 2022_06_13_054209) do
 
   create_table "areas", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -35,6 +35,21 @@ ActiveRecord::Schema.define(version: 2022_04_10_080713) do
     t.index ["barn_id"], name: "index_blocks_on_barn_id"
   end
 
+  create_table "disease_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "treatment_id", null: false
+    t.bigint "disease_tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["disease_tag_id"], name: "index_disease_entries_on_disease_tag_id"
+    t.index ["treatment_id"], name: "index_disease_entries_on_treatment_id"
+  end
+
+  create_table "disease_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "dosages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "treatment_id", null: false
     t.bigint "medicine_id", null: false
@@ -45,6 +60,21 @@ ActiveRecord::Schema.define(version: 2022_04_10_080713) do
     t.index ["treatment_id"], name: "index_dosages_on_treatment_id"
   end
 
+  create_table "individual_tag_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "individual_id", null: false
+    t.bigint "individual_tag_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["individual_id"], name: "index_individual_tag_entries_on_individual_id"
+    t.index ["individual_tag_id"], name: "index_individual_tag_entries_on_individual_tag_id"
+  end
+
+  create_table "individual_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "individuals", id: :string, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date_of_birth"
     t.integer "sex", default: 0
@@ -53,6 +83,7 @@ ActiveRecord::Schema.define(version: 2022_04_10_080713) do
     t.string "mother_id"
     t.string "father_name"
     t.string "grandfather_name"
+    t.string "grand_grandfather_name"
     t.date "date_of_introduction"
     t.bigint "block_id", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
@@ -80,6 +111,18 @@ ActiveRecord::Schema.define(version: 2022_04_10_080713) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "treat_check_tables", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "treatment_id", null: false
+    t.integer "stool", default: 0
+    t.integer "feed", default: 0
+    t.integer "cough", default: 0
+    t.integer "nose", default: 0
+    t.integer "condition", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["treatment_id"], name: "index_treat_check_tables_on_treatment_id"
   end
 
   create_table "treat_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -131,11 +174,16 @@ ActiveRecord::Schema.define(version: 2022_04_10_080713) do
 
   add_foreign_key "barns", "areas"
   add_foreign_key "blocks", "barns"
+  add_foreign_key "disease_entries", "disease_tags"
+  add_foreign_key "disease_entries", "treatments"
   add_foreign_key "dosages", "medicines"
   add_foreign_key "dosages", "treatments"
+  add_foreign_key "individual_tag_entries", "individual_tags"
+  add_foreign_key "individual_tag_entries", "individuals"
   add_foreign_key "individuals", "blocks"
   add_foreign_key "symptom_entries", "symptom_tags"
   add_foreign_key "symptom_entries", "treatments"
+  add_foreign_key "treat_check_tables", "treatments"
   add_foreign_key "treat_comments", "treatments"
   add_foreign_key "treat_comments", "users"
   add_foreign_key "treatments", "individuals"
