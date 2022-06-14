@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
-      resources :individuals, only: %i[index show create]
-      resources :treatments, only: %i[index create show]
+      resources :individuals, only: %i[index show create destroy]
+      resources :treatments, only: %i[index create show destroy]
       resources :areas, only: %i[index destroy create]
       resources :barns, only: %i[show destroy create]
       resources :blocks, only: %i[destroy create]

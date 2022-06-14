@@ -51,6 +51,18 @@ module Api
         end
       end
 
+      def destroy
+        @treatment = Treatment.find(params[:id])
+        if @treatment.destroy
+          render json: {
+            status: "SUCCESS"
+          }
+        else
+          render json: {}, status: :internal_server_error
+        end
+      end
+
+
       private
 
         def treatment_params
