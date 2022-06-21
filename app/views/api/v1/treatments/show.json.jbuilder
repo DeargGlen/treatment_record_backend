@@ -19,6 +19,11 @@ json.disease_tags do
   json.array! @disease_entries, partial: 'disease_entries/disease_entry', as: :disease_entry
 end
 
+json.medicine_tags do
+  json.array! @medicine_entries, partial: 'medicine_entries/medicine_entry', as: :medicine_entry
+end
+
+
 json.extract! @treat_check_table,
               :stool,
               :feed,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_13_054209) do
+ActiveRecord::Schema.define(version: 2022_06_20_170242) do
 
   create_table "areas", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -50,16 +50,6 @@ ActiveRecord::Schema.define(version: 2022_06_13_054209) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "dosages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "treatment_id", null: false
-    t.bigint "medicine_id", null: false
-    t.float "amount", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["medicine_id"], name: "index_dosages_on_medicine_id"
-    t.index ["treatment_id"], name: "index_dosages_on_treatment_id"
-  end
-
   create_table "individual_tag_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "individual_id", null: false
     t.bigint "individual_tag_id", null: false
@@ -80,6 +70,7 @@ ActiveRecord::Schema.define(version: 2022_06_13_054209) do
     t.integer "sex", default: 0
     t.integer "category", default: 0
     t.integer "breed_type", default: 0
+    t.boolean "shipped", default: false
     t.string "mother_id"
     t.string "father_name"
     t.string "grandfather_name"
@@ -91,9 +82,19 @@ ActiveRecord::Schema.define(version: 2022_06_13_054209) do
     t.index ["block_id"], name: "index_individuals_on_block_id"
   end
 
-  create_table "medicines", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "medicine_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "treatment_id", null: false
+    t.bigint "medicine_tag_id", null: false
+    t.float "amount", null: false
+    t.integer "amount_type", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["medicine_tag_id"], name: "index_medicine_entries_on_medicine_tag_id"
+    t.index ["treatment_id"], name: "index_medicine_entries_on_treatment_id"
+  end
+
+  create_table "medicine_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -109,6 +110,27 @@ ActiveRecord::Schema.define(version: 2022_06_13_054209) do
 
   create_table "symptom_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "transfer_entries", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "transfer_id", null: false
+    t.string "individual_id", null: false
+    t.integer "prev_block_id"
+    t.integer "after_block_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["after_block_id"], name: "index_transfer_entries_on_after_block_id"
+    t.index ["individual_id"], name: "index_transfer_entries_on_individual_id"
+    t.index ["prev_block_id", "after_block_id"], name: "index_transfer_entries_on_prev_block_id_and_after_block_id", unique: true
+    t.index ["prev_block_id"], name: "index_transfer_entries_on_prev_block_id"
+    t.index ["transfer_id"], name: "index_transfer_entries_on_transfer_id"
+  end
+
+  create_table "transfers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "date"
+    t.boolean "completed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -176,13 +198,15 @@ ActiveRecord::Schema.define(version: 2022_06_13_054209) do
   add_foreign_key "blocks", "barns"
   add_foreign_key "disease_entries", "disease_tags"
   add_foreign_key "disease_entries", "treatments"
-  add_foreign_key "dosages", "medicines"
-  add_foreign_key "dosages", "treatments"
   add_foreign_key "individual_tag_entries", "individual_tags"
   add_foreign_key "individual_tag_entries", "individuals"
   add_foreign_key "individuals", "blocks"
+  add_foreign_key "medicine_entries", "medicine_tags"
+  add_foreign_key "medicine_entries", "treatments"
   add_foreign_key "symptom_entries", "symptom_tags"
   add_foreign_key "symptom_entries", "treatments"
+  add_foreign_key "transfer_entries", "individuals"
+  add_foreign_key "transfer_entries", "transfers"
   add_foreign_key "treat_check_tables", "treatments"
   add_foreign_key "treat_comments", "treatments"
   add_foreign_key "treat_comments", "users"

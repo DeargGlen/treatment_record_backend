@@ -57,20 +57,21 @@ module Api
         @individual = Individual.find(params[:id])
         @individual.update(individual_params)
 
-        @individual_tags = params[:individual_tags]
+        individual_tags = params[:individual_tags]
+
+                
         @individual_tag_entries = @individual.individual_tag_entries
-        
-        #tag_idのものがあればそのまま、なければ作る
-        @individual_tags.each do |tag_id|
-          if @individual_tag_entries.find_by(individual_tag_id: tag_id).nil?
-            @new_individual_tag_entry = @individual.individual_tag_entries.build({individual_tag_id: tag_id})
+
+        @individual_tag_entries.each do |tag_entry|
+          if !individual_tags.include?(tag_entry.individual_tag_id)
+            tag_entry.destroy
           end
         end
-
-        #エントリにnewタグ一覧にないものがある場合
-        @individual_tag_entries.each do |tag_entry|
-          if ! @individual_tags.include?(tag_entry)
-            tag_entry.destroy
+        
+        individual_tags.each do |tag_id|
+          if @individual_tag_entries.find_by(individual_tag_id: tag_id).nil?
+            @new_individual_tag_entry = @individual.individual_tag_entries.build({individual_tag_id: tag_id})
+            @new_individual_tag_entry.save
           end
         end
 

@@ -6,6 +6,7 @@ class CreateIndividuals < ActiveRecord::Migration[6.1]
       t.integer :sex, default: 0
       t.integer :category, default: 0
       t.integer :breed_type, default: 0
+      t.boolean :shipped, default: 0
       t.string :mother_id
       t.string :father_name
       t.string :grandfather_name

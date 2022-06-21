@@ -23,6 +23,11 @@ module Api
         end
       end
 
+      def destroy
+        @comment = TreatComment.find(params[:id])
+        @comment.destroy
+      end
+
       private
 
         def comment_params
