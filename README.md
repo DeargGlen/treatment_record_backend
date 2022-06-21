@@ -27,21 +27,21 @@
 
 git clone するか、zipファイルを直接ダウンロードしてください。
 ```bash
-git clone https://github.com/DeargGlen/treatment_record_backend.git
+$ git clone https://github.com/DeargGlen/treatment_record_backend.git
 ```
 以下で必要なパッケージをインストールします。
 ```bash
-bundle install
+$ bundle install
 ```
 database.yml, development.rb, production.rb, devise.rbに必要な環境変数を.envなどで用意してください。
 
 データベースを作成、マイグレーションを行います。
 ```bash
-rails db:create
-rails db:migrate
+$ rails db:create
+$ rails db:migrate
 ```
 アプリケーションを起動します。
 ```
-rails s
+$ rails s
 ```
 
