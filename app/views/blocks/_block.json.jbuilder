@@ -1,5 +1,5 @@
 json.extract! block, :id, :No
-json.individuals block.individuals do |individual|
+json.individuals block.individuals.where(shipped: false) do |individual|
   json.id individual.id
   json.date_of_birth individual.date_of_birth
   json.sex individual.sex
