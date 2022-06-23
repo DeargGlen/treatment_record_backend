@@ -6,6 +6,7 @@ module Api
       def show
         @barn = Barn.find_by(id: params[:id])
         @blocks = @barn.blocks
+        @d2=Date.today
 
         respond_to do |format|
           format.json
