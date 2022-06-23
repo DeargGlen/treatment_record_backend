@@ -123,7 +123,6 @@ ActiveRecord::Schema.define(version: 2022_06_20_170242) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["after_block_id"], name: "index_transfer_entries_on_after_block_id"
     t.index ["individual_id"], name: "index_transfer_entries_on_individual_id"
-    t.index ["prev_block_id", "after_block_id"], name: "index_transfer_entries_on_prev_block_id_and_after_block_id", unique: true
     t.index ["prev_block_id"], name: "index_transfer_entries_on_prev_block_id"
     t.index ["transfer_id"], name: "index_transfer_entries_on_transfer_id"
   end

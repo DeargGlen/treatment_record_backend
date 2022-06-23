@@ -9,7 +9,8 @@ json.extract! individual,
               :mother_id,
               :father_name,
               :grandfather_name,
-              :grand_grandfather_name
+              :grand_grandfather_name,
+              :shipped
 json.barn_name individual.barn.name
 json.extract! individual.block, :No
 json.area_name individual.barn.area.name

@@ -21,28 +21,40 @@ module Api
       end
 
       def create
-        @treatment = current_api_v1_user.treatments.build(treatment_params)
+        @transfer = Transfer.new(transfer_params)
+        @individual_entries = params[:individual_entries]
+        @prev_block_id_entries = params[:prev_block_id_entries]
+        @after_block_id_entries = params[:after_block_id_entries]
 
-        if @treatment.save
+        @individual_entries.zip(@prev_block_id_entries, @after_block_id_entries) do |individual_id, prev_block_id, after_block_id|
+          @new_transfer_entry = @transfer.transfer_entries.build({individual_id: individual_id, prev_block_id: prev_block_id, after_block_id: after_block_id})
+          @new_transfer_entry.save
+        end
+
+        if @transfer.save
           render json: {
-            treatment: @treatment,
+            transfer: @transfer,
           }, status: :created
         else
           render json: {}, status: :internal_server_error
         end
       end
 
-      def destroy
-        @treatment = Treatment.find(params[:id])
-        if @treatment.destroy
-          render json: {
-            status: "SUCCESS"
-          }
-        else
-          render json: {}, status: :internal_server_error
-        end
+      def update
+        @transfer = Transfer.find(params[:id])
+        @transfer.update(transfer_params)
       end
 
+      def destroy
+        @transfer = Transfer.find(params[:id])
+        @transfer.destroy
+      end
+
+      private
+
+        def transfer_params
+          params.require(:transfer).permit(:date, :completed)
+        end
     end
   end
 end

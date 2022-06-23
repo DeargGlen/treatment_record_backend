@@ -10,6 +10,5 @@ class CreateTransferEntries < ActiveRecord::Migration[6.1]
     end
     add_index :transfer_entries, :prev_block_id
     add_index :transfer_entries, :after_block_id
-    add_index :transfer_entries, [:prev_block_id, :after_block_id], unique: true
   end
 end
