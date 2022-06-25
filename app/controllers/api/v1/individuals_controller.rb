@@ -71,7 +71,7 @@ module Api
 
         @individual_tag_entries = @individual.individual_tag_entries
 
-        if @individual_tag_entries.present?
+        if individual_tags.present?
           @individual_tag_entries.each do |tag_entry|
             if !individual_tags.include?(tag_entry.individual_tag_id)
               tag_entry.destroy
